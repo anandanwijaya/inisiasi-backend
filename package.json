@@ -2,13 +2,21 @@
   "name": "inisiasi-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.0"
+    "@prisma/client": "^5.20.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^5.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
