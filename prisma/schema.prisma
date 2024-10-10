@@ -38,9 +38,9 @@ model Item {
 }
 
 model Transaction {
-  transactionId Int @id @default(autoincrement())
-  itemId Int
+  id Int @id @default(autoincrement())
   userId Int
+  itemId Int
   quantityBorrowed Int
   borrowedAt DateTime @default(now())
   returnedAt DateTime?
