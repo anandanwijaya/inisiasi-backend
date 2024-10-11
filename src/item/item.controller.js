@@ -49,7 +49,7 @@ router.delete('/:id', async(req, res) => {
     try {
         let itemId = req.params.id
         await deleteItemById(itemId) 
-        res.status(204).json({ message: 'item deleted' })
+        res.status(200).json({ message: 'item deleted' })
     } catch (error) {
         res.status(400).send(error.message)
     }
