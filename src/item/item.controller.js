@@ -1,9 +1,11 @@
 let express = require('express')
 let {createItem, getAllItems, getItemById, editItemById, deleteItemById} = require('./item.services');
+let authorizeJwt = require('../middleware/authorizeJWT')
+let adminAuthorization = require('../middleware/adminAuthorization')
 
 let router = express.Router()
 
-router.post('/', async(req, res) => {
+router.post('/', adminAuthorization, async(req, res) => {
 
     try {
         let newItemData = req.body
@@ -14,7 +16,7 @@ router.post('/', async(req, res) => {
     }
 })
 
-router.get('/', async(req, res) => {
+router.get('/', authorizeJwt, async(req, res) => {
     
     try {
         let items = await getAllItems()
@@ -24,7 +26,7 @@ router.get('/', async(req, res) => {
     }
 })
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', authorizeJwt, async(req, res) => {
     try {
         let itemId = parseInt(req.params.id)
         let item = await getItemById(itemId)
@@ -34,7 +36,7 @@ router.get('/:id', async(req, res) => {
     }
 })
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', adminAuthorization, async(req, res) => {
     try {
         let itemId = req.params.id
         let itemData = req.body
@@ -45,11 +47,11 @@ router.put('/:id', async(req, res) => {
     }
 })
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', adminAuthorization, async(req, res) => {
     try {
         let itemId = req.params.id
         await deleteItemById(itemId) 
-        res.status(200).json({ message: 'item deleted' })
+        res.status(204).json({ message: 'item deleted' })
     } catch (error) {
         res.status(400).send(error.message)
     }

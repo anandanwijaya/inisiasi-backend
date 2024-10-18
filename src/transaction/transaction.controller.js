@@ -1,11 +1,14 @@
 let express = require('express')
 let router = express.Router()
 let transactionServices = require('./transaction.services')
+let authorizeJwt = require('../middleware/authorizeJWT')
+let adminAuthorization = require('../middleware/adminAuthorization')
 
-router.post('/borrow', async(req, res) => {
-
+router.post('/borrow', authorizeJwt, async(req, res) => {
+ 
     try {
-        let {userId, itemId, quantityBorrowed} = req.body
+        let userId = req.userId
+        let {itemId, quantityBorrowed} = req.body
         let newTransaction = await transactionServices.borrowItem(userId, itemId, quantityBorrowed)
         res.status(201).json(newTransaction)
     } catch (error) {
@@ -14,7 +17,7 @@ router.post('/borrow', async(req, res) => {
 })
 
 
-router.get('/', async(req, res) => {
+router.get('/', adminAuthorization, async(req, res) => {
     
     try {
         let transactions = await transactionServices.getAllTransactions()
@@ -25,9 +28,9 @@ router.get('/', async(req, res) => {
 })
 
 
-router.get('/user', async(req, res) => {
+router.get('/user', authorizeJwt, async(req, res) => {
 
-    let {userId} = req.body
+    let userId = req.userId
     try {
         let transactions = await transactionServices.getTransactionsByUserId(userId)
         res.status(200).send(transactions)
@@ -36,7 +39,7 @@ router.get('/user', async(req, res) => {
     }
 })
 
-router.patch('/verify/:transactionId', async(req, res) => {
+router.patch('/verify/:transactionId', adminAuthorization, async(req, res) => {
 
     try {
         let {transactionId} = req.params
@@ -48,11 +51,11 @@ router.patch('/verify/:transactionId', async(req, res) => {
     }
 })
 
-router.post('/return/:transactionId', async(req, res) => {
+router.post('/return/:transactionId', authorizeJwt, async(req, res) => {
 
     try {
         let {transactionId} = req.params
-        let {userId} = req.body
+        let userId = req.userId
  
         let transaction = await transactionServices.getTransactionsById(transactionId)
         if(transaction.userId !== userId){
