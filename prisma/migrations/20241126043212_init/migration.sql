@@ -29,15 +29,15 @@ CREATE TABLE "Item" (
 
 -- CreateTable
 CREATE TABLE "Transaction" (
-    "transactionId" SERIAL NOT NULL,
-    "itemId" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
+    "itemId" INTEGER NOT NULL,
     "quantityBorrowed" INTEGER NOT NULL,
     "borrowedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "returnedAt" TIMESTAMP(3),
     "status" "TransactionStatus" NOT NULL,
 
-    CONSTRAINT "Transaction_pkey" PRIMARY KEY ("transactionId")
+    CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

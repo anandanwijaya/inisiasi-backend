@@ -26,6 +26,11 @@ async function findTransactions() {
                     select: {
                         name: true
                     }
+                },
+                user: {
+                    select: {
+                        username: true
+                    }
                 }
             }
         })
@@ -47,6 +52,11 @@ async function findTransactionsByUserId(userId) {
                 item: {
                     select: {
                         name: true
+                    }
+                },
+                user: {
+                    select: {
+                        username: true
                     }
                 }
             }
