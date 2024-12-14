@@ -1,15 +1,15 @@
-let express = require('express')
-let router = express.Router()
-let transactionServices = require('./transaction.services')
-let authorizeJwt = require('../middleware/authorizeJWT')
-let adminAuthorization = require('../middleware/adminAuthorization')
+const express = require('express')
+const router = express.Router()
+const transactionServices = require('./transaction.services')
+const authorizeJwt = require('../middleware/authorizeJWT')
+const adminAuthorization = require('../middleware/adminAuthorization')
 
 router.post('/borrow', authorizeJwt, async(req, res) => {
  
     try {
-        let userId = req.userId
-        let {itemId, quantityBorrowed} = req.body
-        let newTransaction = await transactionServices.borrowItem(userId, itemId, quantityBorrowed)
+        const userId = req.userId
+        const {itemId, quantityBorrowed} = req.body
+        const newTransaction = await transactionServices.borrowItem(userId, itemId, quantityBorrowed)
         res.status(201).json(newTransaction)
     } catch (error) {
         res.status(400).send(error.message)
@@ -20,7 +20,7 @@ router.post('/borrow', authorizeJwt, async(req, res) => {
 router.get('/', adminAuthorization, async(req, res) => {
     
     try {
-        let transactions = await transactionServices.getAllTransactions()
+        const transactions = await transactionServices.getAllTransactions()
         res.send(transactions)
     } catch (error) {
         res.status(500).send(error.message)
@@ -30,9 +30,9 @@ router.get('/', adminAuthorization, async(req, res) => {
 
 router.get('/user', authorizeJwt, async(req, res) => {
 
-    let userId = req.userId
+    const userId = req.userId
     try {
-        let transactions = await transactionServices.getTransactionsByUserId(userId)
+        const transactions = await transactionServices.getTransactionsByUserId(userId)
         res.status(200).send(transactions)
     } catch (error) {
         res.status(500).send(error.message)
@@ -42,8 +42,8 @@ router.get('/user', authorizeJwt, async(req, res) => {
 router.patch('/verify/:transactionId', adminAuthorization, async(req, res) => {
 
     try {
-        let {transactionId} = req.params
-        let {status} = req.body
+        const {transactionId} = req.params
+        const {status} = req.body
         await transactionServices.verifyTransaction(transactionId, status)
         res.status(200).json({message: 'Transaction verified successfully'})
     } catch (error) {
@@ -54,10 +54,10 @@ router.patch('/verify/:transactionId', adminAuthorization, async(req, res) => {
 router.post('/return/:transactionId', authorizeJwt, async(req, res) => {
 
     try {
-        let {transactionId} = req.params
-        let userId = req.userId
+        const {transactionId} = req.params
+        const userId = req.userId
  
-        let transaction = await transactionServices.getTransactionsById(transactionId)
+        const transaction = await transactionServices.getTransactionsById(transactionId)
         if(transaction.userId !== userId){
             return res.status(403).json({message: 'Unauthorized'})
         }

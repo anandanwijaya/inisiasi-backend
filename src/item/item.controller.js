@@ -1,15 +1,15 @@
-let express = require('express')
-let {createItem, getAllItems, getItemById, editItemById, deleteItemById} = require('./item.services');
-let authorizeJwt = require('../middleware/authorizeJWT')
-let adminAuthorization = require('../middleware/adminAuthorization')
+const express = require('express')
+const {createItem, getAllItems, getItemById, editItemById, deleteItemById} = require('./item.services');
+const authorizeJwt = require('../middleware/authorizeJWT')
+const adminAuthorization = require('../middleware/adminAuthorization')
 
-let router = express.Router()
+const router = express.Router()
 
 router.post('/', adminAuthorization, async(req, res) => {
 
     try {
-        let newItemData = req.body
-        let newItem = await createItem(newItemData)
+        const newItemData = req.body
+        const newItem = await createItem(newItemData)
         res.status(201).json(newItem)
     } catch (error) {
         res.status(400).send(error.message)
@@ -19,7 +19,7 @@ router.post('/', adminAuthorization, async(req, res) => {
 router.get('/', authorizeJwt, async(req, res) => {
     
     try {
-        let items = await getAllItems()
+        const items = await getAllItems()
         res.status(200).send(items)
     } catch (error) {
         res.status(500).send(error.message)
@@ -28,8 +28,8 @@ router.get('/', authorizeJwt, async(req, res) => {
 
 router.get('/:id', authorizeJwt, async(req, res) => {
     try {
-        let itemId = parseInt(req.params.id)
-        let item = await getItemById(itemId)
+        const itemId = parseInt(req.params.id)
+        const item = await getItemById(itemId)
         res.status(200).send(item)
     } catch (error) {
         res.status(400).send(error.message)
@@ -38,9 +38,9 @@ router.get('/:id', authorizeJwt, async(req, res) => {
 
 router.put('/:id', adminAuthorization, async(req, res) => {
     try {
-        let itemId = req.params.id
-        let itemData = req.body
-        let updatedItem = await editItemById(itemId, itemData)
+        const itemId = req.params.id
+        const itemData = req.body
+        const updatedItem = await editItemById(itemId, itemData)
         res.send(updatedItem)
     } catch (error) {
         res.status(400).send(error.message)
@@ -49,7 +49,7 @@ router.put('/:id', adminAuthorization, async(req, res) => {
 
 router.delete('/:id', adminAuthorization, async(req, res) => {
     try {
-        let itemId = req.params.id
+        const itemId = req.params.id
         await deleteItemById(itemId) 
         res.status(204).json({ message: 'item deleted' })
     } catch (error) {

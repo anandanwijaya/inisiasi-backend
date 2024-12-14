@@ -1,9 +1,9 @@
-let prisma = require('../db')
+const prisma = require('../db')
 
 async function createTransaction(userId, itemId, quantityBorrowed) {
 
     try {
-        let newTransaction = await prisma.transaction.create({
+        const newTransaction = await prisma.transaction.create({
             data: {
                 userId,
                 itemId,
@@ -20,7 +20,7 @@ async function createTransaction(userId, itemId, quantityBorrowed) {
 async function findTransactions() {
     
     try {
-        let transactions = await prisma.transaction.findMany({
+        const transactions = await prisma.transaction.findMany({
             include: {
                 item: {
                     select: {
@@ -44,7 +44,7 @@ async function findTransactions() {
 async function findTransactionsByUserId(userId) {
     
     try {
-        let transactions = await prisma.transaction.findMany({
+        const transactions = await prisma.transaction.findMany({
             where: {
                 userId: parseInt(userId)
             },
@@ -69,7 +69,7 @@ async function findTransactionsByUserId(userId) {
 
 async function findTransactionById(id) {
   
-    let transaction = await prisma.transaction.findUnique({
+    const transaction = await prisma.transaction.findUnique({
         where: {
             id: parseInt(id)
         }
@@ -80,7 +80,7 @@ async function findTransactionById(id) {
 async function updateTransactionStatus(transactionId, status, timeStampField) {
     
     try {
-        let updateData = {status}
+        const updateData = {status}
 
         if(timeStampField){
             updateData[timeStampField] = new Date()

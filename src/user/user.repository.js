@@ -1,8 +1,8 @@
-let prisma = require('../db')
+const prisma = require('../db')
 
 async function insertUser(userData) {
 
-    let newUser = await prisma.user.create({
+    const newUser = await prisma.user.create({
         data: {
             username: userData.username, 
             email: userData.email, 
@@ -14,7 +14,7 @@ async function insertUser(userData) {
 }
 
 async function findUsers() {
-   let users = await prisma.user.findMany({
+   const users = await prisma.user.findMany({
         select: {
             id: true,
             username: true,
@@ -27,7 +27,7 @@ async function findUsers() {
 }
 
 async function findUserById(id) {
-    let user = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
         where: {
             id: parseInt(id)
         },
@@ -44,7 +44,7 @@ async function findUserById(id) {
 
 
 async function editUser(id, userData) {
-    let updatedUser = await prisma.user.update({
+    const updatedUser = await prisma.user.update({
         where: {
             id: parseInt(id)
         },

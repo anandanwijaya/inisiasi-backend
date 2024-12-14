@@ -1,20 +1,20 @@
-let { insertItem, findItems, findItemById, editItem, deleteItem } = require('./item.repository')
+const { insertItem, findItems, findItemById, editItem, deleteItem } = require('./item.repository')
 
 async function createItem(newItemData) {
     
-    let newItem = await insertItem(newItemData)
+    const newItem = await insertItem(newItemData)
     return newItem
 }
 
 async function getAllItems() {
 
-    let items = await findItems()
+    const items = await findItems()
     return items
 }
 
 async function getItemById(id) {
 
-    let item = await findItemById(id)
+    const item = await findItemById(id)
     if (!item) {
         throw Error('Item not found')
     }
@@ -24,7 +24,7 @@ async function getItemById(id) {
 async function editItemById(id, itemData) {
 
     await getItemById(id)
-    let updatedItem = await editItem(id, itemData)
+    const updatedItem = await editItem(id, itemData)
     return updatedItem
 }
 

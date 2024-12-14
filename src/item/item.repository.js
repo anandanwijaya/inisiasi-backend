@@ -1,8 +1,8 @@
-let prisma = require('../db')
+const prisma = require('../db')
 
 async function insertItem(itemData) {
 
-    let newItem = await prisma.item.create({
+    const newItem = await prisma.item.create({
         data: {
             name: itemData.name,
             description: itemData.description,
@@ -14,13 +14,13 @@ async function insertItem(itemData) {
 
 async function findItems() {
 
-    let items = await prisma.item.findMany()
+    const items = await prisma.item.findMany()
     return items
 }
 
 async function findItemById(id) {
     
-    let item = await prisma.item.findUnique({
+    const item = await prisma.item.findUnique({
         where: {
             id: parseInt(id)
         }
@@ -30,7 +30,7 @@ async function findItemById(id) {
 
 async function editItem(id, itemData) {
     
-    let updatedItem = await prisma.item.update({
+    const updatedItem = await prisma.item.update({
         where: {
             id: parseInt(id)
         }, 

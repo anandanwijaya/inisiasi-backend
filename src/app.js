@@ -1,8 +1,8 @@
-let express = require('express')
-let cors = require('cors')
-let app = express()
-let dotenv = require('dotenv')
-let adminAuthorization = require('./middleware/adminAuthorization')
+const express = require('express')
+const cors = require('cors')
+const app = express()
+const dotenv = require('dotenv')
+const adminAuthorization = require('./middleware/adminAuthorization')
 dotenv.config()
 
 app.use(express.json())
@@ -11,10 +11,10 @@ app.get('/', (req, res) => {
     res.send('Hello there!')
 })
 
-let authController = require('./auth/auth.controller')
-let userController = require('./user/user.controller')
-let itemController = require('./item/item.controller')
-let transactionController = require('./transaction/transaction.controller')
+const authController = require('./auth/auth.controller')
+const userController = require('./user/user.controller')
+const itemController = require('./item/item.controller')
+const transactionController = require('./transaction/transaction.controller')
 
 app.use('/api/auth', authController)
 app.use('/api/users', adminAuthorization, userController)
